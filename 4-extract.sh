@@ -1,9 +1,9 @@
 #!/bin/bash
 set -eux
 
-cd roms
-for zip in *.zip
+mkdir -p 'roms'
+for zip in zips/*.zip
 do
-    bsdtar -xf "${zip}"
+    bsdtar -xf "${zip}" --directory 'roms'
     echo "" > "${zip}"
 done

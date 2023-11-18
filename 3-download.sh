@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eux
-wget --no-clobber --directory-prefix 'roms' --input-file '2-files.txt'
+wget --no-clobber --directory-prefix 'zips' --input-file '2-files.txt'
