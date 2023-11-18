@@ -5,5 +5,5 @@ cd roms
 for zip in *.zip
 do
     bsdtar -xf "${zip}"
-    rm "${zip}"
+    echo "" > "${zip}"
 done

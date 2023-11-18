@@ -1,3 +1,3 @@
 #!/bin/bash
 set -eux
-wget --timestamping --directory-prefix 'roms' --input-file 'files.txt'
+wget --no-clobber --directory-prefix 'roms' --input-file 'files.txt'
