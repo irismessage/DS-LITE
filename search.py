@@ -39,7 +39,7 @@ def main():
         games = in_file.readlines()
     games = [g.removesuffix("\n") for g in games]
 
-    files = [search(name, archive_org_files) for name in games]
+    files = [*search(name, archive_org_files) for name in games]
 
     files = [f + "\n" for f in files]
     with open(OUT_FILE, "w") as out_file:
