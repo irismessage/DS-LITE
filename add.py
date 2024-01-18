@@ -26,7 +26,7 @@ def add(target: str):
         return
 
     with open(PATH_IN_FILE, "a") as in_file:
-        in_file.write()
+        in_file.write(target)
 
 
 def main():
