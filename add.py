@@ -3,7 +3,9 @@
 from pathlib import Path
 from sys import argv
 
-PATH_IN_FILE = Path("0-games.txt")
+WORKDIR = Path(__file__).parent
+PATH_IN_FILE_REL = Path("0-games.txt")
+PATH_IN_FILE = WORKDIR / PATH_IN_FILE_REL
 
 
 def load() -> set[str]:
