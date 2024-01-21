@@ -1,9 +1,7 @@
 #!/bin/bash
 set -eux
 
-mkdir -p 'roms'
-for zip in zips/*.zip
-do
-    bsdtar -xf "${zip}" --directory 'roms'
-    # echo "" > "${zip}"
-done
+mkdir -p 'roms/'
+find 'zips/' -name '*.zip' -print0 | 
+    xargs --verbose --max-procs=0 --max-args=1 --null \
+        bsdtar --keep-old-files --directory 'roms/' -xf
