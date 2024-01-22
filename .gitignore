@@ -1,7 +1,11 @@
+# python
 __pycache__/
 
+# managed download directories
 completions/
-firmware/
-manuals/
 roms/
 zips/
+
+# misc. directories
+firmware/
+manuals/
