@@ -1,13 +1,11 @@
 #!/bin/bash
 set -eux
 
-
-dest="${1:-roms/}"
-procs="${2:-1}"
-
-basedir='nds/'
+basedir='nds'
 source="${basedir}/zips/"
-dest="${basedir}/"${dest}""
+
+dest="${1:-${basedir}/roms/}"
+procs="${2:-1}"
 
 echo "Destination: ${dest}"
 echo "Processes: ${procs}"

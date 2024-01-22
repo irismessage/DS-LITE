@@ -5,10 +5,11 @@ from pathlib import Path
 
 BASEDIR = Path("nds/")
 COMPLETIONS_DIR = BASEDIR / "completions/"
+PATH_METADATA = BASEDIR / "metadata.json"
 
 
 def list_files() -> list[str]:
-    with open("metadata.json") as fp:
+    with open(PATH_METADATA) as fp:
         metadata = json.load(fp)
     files = metadata["files"]
     files = [f["name"] for f in files]

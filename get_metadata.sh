@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-basedir='nds/'
+basedir='nds'
 source='https://archive.org/metadata/no-ndsdec2022'
 
 wget \

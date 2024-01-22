@@ -3,9 +3,11 @@
 from pathlib import Path
 from urllib.parse import quote
 
+from common import PATH_FILES, PATH_GAMES
+
 BASEDIR = Path("nds")
-PATH_IN_FILE = BASEDIR / "0-games.txt"
-PATH_OUT_FILE = BASEDIR / "2-files.txt"
+PATH_IN_FILE = BASEDIR / PATH_GAMES
+PATH_OUT_FILE = BASEDIR / PATH_FILES
 
 
 def convert(prefix: str, name: str) -> str:

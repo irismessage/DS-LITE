@@ -3,9 +3,11 @@
 from pathlib import Path
 from sys import argv
 
+from common import PATH_GAMES
+
 BASEDIR = Path("nds")
 WORKDIR = Path(__file__).parent
-PATH_IN_FILE_REL = BASEDIR / "0-games.txt"
+PATH_IN_FILE_REL = BASEDIR / PATH_GAMES
 PATH_IN_FILE = WORKDIR / PATH_IN_FILE_REL
 
 
