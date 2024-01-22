@@ -1,7 +1,7 @@
 #!/bin/bash
 set -eux
 
-basedir='nds'
+basedir="${1:-nds}"
 path_files='files.txt'
 
 wget \

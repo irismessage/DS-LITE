@@ -7,8 +7,7 @@ from common import PATH_GAMES
 
 BASEDIR = Path("nds")
 WORKDIR = Path(__file__).parent
-PATH_IN_FILE_REL = BASEDIR / PATH_GAMES
-PATH_IN_FILE = WORKDIR / PATH_IN_FILE_REL
+PATH_IN_FILE = WORKDIR / BASEDIR / PATH_GAMES
 
 
 def load() -> set[str]:

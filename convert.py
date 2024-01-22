@@ -8,6 +8,12 @@ from common import PATH_FILES, PATH_GAMES
 BASEDIR = Path("nds")
 PATH_IN_FILE = BASEDIR / PATH_GAMES
 PATH_OUT_FILE = BASEDIR / PATH_FILES
+PATH_ARCHIVEID = BASEDIR / "archiveid"
+
+
+def get_url_prefix() -> str:
+    archiveid = PATH_ARCHIVEID.read_text()
+    return f"https://archive.org/download/{archiveid}"
 
 
 def convert(prefix: str, name: str) -> str:
@@ -15,12 +21,12 @@ def convert(prefix: str, name: str) -> str:
 
 
 def main():
+    prefix = get_url_prefix()
+
     with open(PATH_IN_FILE) as in_file, open(PATH_OUT_FILE, "w") as out_file:
         out_file.writelines(
-            convert(
-                "https://archive.org/download/no-ndsdec2022",
-                line.removesuffix("\n")
-            ) + "\n" for line in in_file.readlines()
+            convert(prefix, line.removesuffix("\n")) + "\n"
+            for line in in_file.readlines()
         )
 
 

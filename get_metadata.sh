@@ -2,7 +2,8 @@
 set -eux
 
 basedir='nds'
-source='https://archive.org/metadata/no-ndsdec2022'
+archiveid=$(cat "${basedir}/archiveid")
+source="https://archive.org/metadata/${archiveid}"
 
 wget \
     --output-document - \

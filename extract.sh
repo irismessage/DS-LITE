@@ -1,14 +1,10 @@
 #!/bin/bash
 set -eux
 
-basedir='nds'
+basedir="${1:-nds}"
 source="${basedir}/zips/"
-
-dest="${1:-${basedir}/roms/}"
-procs="${2:-1}"
-
-echo "Destination: ${dest}"
-echo "Processes: ${procs}"
+dest="${2:-${basedir}/roms/}"
+procs="${3:-1}"
 
 mkdir -p "${dest}"
 find "${source}" -name '*.zip' -print0 | 
