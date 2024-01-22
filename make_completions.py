@@ -3,7 +3,8 @@
 import json
 from pathlib import Path
 
-COMPLETIONS_DIR = Path("completions/")
+BASEDIR = Path("nds/")
+COMPLETIONS_DIR = BASEDIR / "completions/"
 
 
 def list_files() -> list[str]:
