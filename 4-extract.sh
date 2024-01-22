@@ -9,5 +9,5 @@ echo "Processes: ${procs}"
 
 mkdir -p "${dest}"
 find 'zips/' -name '*.zip' -print0 | 
-    xargs --verbose --max-procs=0 --max-args=1 --null \
+    xargs --verbose --max-procs="${procs}" --max-args=1 --null \
         bsdtar --keep-old-files --directory "${dest}" -xf
