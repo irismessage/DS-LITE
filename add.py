@@ -1,5 +1,6 @@
 #!/usr/bin/python
 
+import os
 from argparse import ArgumentParser
 from pathlib import Path
 from sys import argv
@@ -45,9 +46,14 @@ def add(target: str):
         in_file.write(target)
 
 
+def call_convert():
+    os.system(f"./convert.py '{BASEDIR}'")
+
+
 def main():
     target = args.target.stem
     add(target)
+    call_convert()
 
 
 if __name__ == "__main__":
