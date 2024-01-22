@@ -2,8 +2,12 @@
 
 import json
 from pathlib import Path
+from sys import argv
 
-BASEDIR = Path("nds/")
+try:
+    BASEDIR = Path(argv[1])
+except IndexError:
+    BASEDIR = Path("nds/")
 COMPLETIONS_DIR = BASEDIR / "completions/"
 PATH_METADATA = BASEDIR / "metadata.json"
 

@@ -2,10 +2,14 @@
 
 from pathlib import Path
 from urllib.parse import quote
+from sys import argv
 
 from common import PATH_FILES, PATH_GAMES
 
-BASEDIR = Path("nds")
+try:
+    BASEDIR = Path(argv[1])
+except IndexError:
+    BASEDIR = Path("nds/")
 PATH_IN_FILE = BASEDIR / PATH_GAMES
 PATH_OUT_FILE = BASEDIR / PATH_FILES
 PATH_ARCHIVEID = BASEDIR / "archiveid"

@@ -1,11 +1,23 @@
 #!/usr/bin/python
 
+from argparse import ArgumentParser
 from pathlib import Path
 from sys import argv
 
 from common import PATH_GAMES
 
-BASEDIR = Path("nds")
+
+def get_parser() -> ArgumentParser:
+    parser = ArgumentParser()
+    parser.add_argument("-b", "--basedir", default="nds", type=Path)
+    parser.add_argument("target", type=Path)
+
+    return parser
+
+
+parser = get_parser()
+args = parser.parse_args()
+BASEDIR = args.basedir
 WORKDIR = Path(__file__).parent
 PATH_IN_FILE = WORKDIR / BASEDIR / PATH_GAMES
 
@@ -34,7 +46,7 @@ def add(target: str):
 
 
 def main():
-    target = Path(argv[1]).stem
+    target = args.target.stem
     add(target)
 
 
