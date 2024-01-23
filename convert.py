@@ -1,29 +1,29 @@
 #!/usr/bin/python
 
+import json
 from pathlib import Path
 from sys import argv
 from urllib.parse import quote
 
 from _common import DEFAULT_BASEDIR, PATH_FILES, PATH_GAMES
 
-PATH_ARCHIVEID = "archiveid"
-PATH_SUFFIX = "suffix"
+PATH_SOURCE = "source.json"
 
 
-def get_url_prefix(basedir: Path) -> str:
-    archiveid_path = basedir / PATH_ARCHIVEID
-    archiveid = archiveid_path.read_text().strip()
-    return f"https://archive.org/download/{archiveid}"
+def get_template(basedir: Path) -> str:
+    source_path = basedir / PATH_SOURCE
+
+    with open(source_path) as file:
+        source_dict = json.load(file)
+    archiveid = source_dict["archiveid"]
+    suffix = source_dict["suffix"]
+
+    return f"https://archive.org/download/{archiveid}/{{name}}{suffix}"
 
 
-def get_url_suffix(basedir: Path) -> str:
-    suffix_path = basedir / PATH_SUFFIX
-    suffix = suffix_path.read_text().strip()
-    return suffix
-
-
-def convert(prefix: str, suffix: str, name: str) -> str:
-    return f"{prefix}/{quote(name)}.{suffix}"
+def convert(template: str, name: str) -> str:
+    name = quote(name)
+    return template.format(name=name)
 
 
 def main():
@@ -34,12 +34,11 @@ def main():
     games_path = basedir / PATH_GAMES
     files_path = basedir / PATH_FILES
 
-    prefix = get_url_prefix(basedir)
-    suffix = get_url_suffix(basedir)
+    template = get_template(basedir)
 
     with open(games_path) as in_file, open(files_path, "w") as out_file:
         out_file.writelines(
-            convert(prefix, suffix, li.removesuffix("\n")) + "\n"
+            convert(template, li.removesuffix("\n")) + "\n"
             for li in in_file.readlines()
         )
 

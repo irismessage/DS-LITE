@@ -2,7 +2,7 @@
 set -eux
 
 basedir="${1:-nds}"
-archiveid=$(cat "${basedir}/archiveid")
+archiveid=$(jq -r '.archiveid' "${basedir}/source.json")
 source="https://archive.org/metadata/${archiveid}"
 
 wget \
