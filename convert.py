@@ -21,16 +21,15 @@ def get_template(basedir: Path) -> str:
     return f"https://archive.org/download/{archiveid}/{{name}}{suffix}"
 
 
-def convert(template: str, name: str) -> str:
+def convert_one(template: str, line: str) -> str:
+    name = line.removesuffix("\n")
     name = quote(name)
-    return template.format(name=name)
+    url = template.format(name=name)
+
+    return url + "\n"
 
 
-def main():
-    try:
-        basedir = Path(argv[1])
-    except IndexError:
-        basedir = Path(DEFAULT_BASEDIR)
+def convert(basedir: Path):
     games_path = basedir / PATH_GAMES
     files_path = basedir / PATH_FILES
 
@@ -38,9 +37,18 @@ def main():
 
     with open(games_path) as in_file, open(files_path, "w") as out_file:
         out_file.writelines(
-            convert(template, li.removesuffix("\n")) + "\n"
+            convert_one(template, li)
             for li in in_file.readlines()
         )
+
+
+def main():
+    try:
+        basedir = Path(argv[1])
+    except IndexError:
+        basedir = Path(DEFAULT_BASEDIR)
+    
+    convert(basedir)
 
 
 if __name__ == "__main__":

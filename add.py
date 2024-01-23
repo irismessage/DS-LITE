@@ -6,6 +6,7 @@ from pathlib import Path
 from sys import argv
 
 from _common import DEFAULT_BASEDIR, PATH_GAMES
+from convert import convert
 
 
 def get_parser() -> ArgumentParser:
@@ -30,7 +31,7 @@ def save(games_path: Path, old: set[str], new: set[str]):
 
 def add(games_path: Path, target: str):
     target = target + "\n"
-    games = load()
+    games = load(games_path)
     if target in games:
         print("Already in there")
         return
@@ -52,8 +53,8 @@ def main():
     games_path = workdir / basedir / PATH_GAMES
     target = args.target.stem
 
-    add(target)
-    call_convert()
+    add(games_path, target)
+    convert(basedir)
 
 
 if __name__ == "__main__":
