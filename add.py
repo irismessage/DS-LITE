@@ -31,6 +31,8 @@ def save(games_path: Path, old: set[str], new: set[str]):
 
 def add(games_path: Path, target: str) -> bool:
     target = target + "\n"
+
+    games_path.touch()
     games = load(games_path)
     if target in games:
         print("Already in there")
