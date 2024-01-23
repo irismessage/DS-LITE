@@ -1,28 +1,24 @@
 #!/usr/bin/python
 
 from pathlib import Path
-from urllib.parse import quote
 from sys import argv
+from urllib.parse import quote
 
-from common import PATH_FILES, PATH_GAMES
+from _common import DEFAULT_BASEDIR, PATH_FILES, PATH_GAMES
 
-try:
-    BASEDIR = Path(argv[1])
-except IndexError:
-    BASEDIR = Path("nds/")
-PATH_IN_FILE = BASEDIR / PATH_GAMES
-PATH_OUT_FILE = BASEDIR / PATH_FILES
-PATH_ARCHIVEID = BASEDIR / "archiveid"
-PATH_SUFFIX = BASEDIR / "suffix"
+PATH_ARCHIVEID = "archiveid"
+PATH_SUFFIX = "suffix"
 
 
-def get_url_prefix() -> str:
-    archiveid = PATH_ARCHIVEID.read_text().strip()
+def get_url_prefix(basedir: Path) -> str:
+    archiveid_path = basedir / PATH_ARCHIVEID
+    archiveid = archiveid_path.read_text().strip()
     return f"https://archive.org/download/{archiveid}"
 
 
-def get_url_suffix() -> str:
-    suffix = PATH_SUFFIX.read_text().strip()
+def get_url_suffix(basedir: Path) -> str:
+    suffix_path = basedir / PATH_SUFFIX
+    suffix = suffix_path.read_text().strip()
     return suffix
 
 
@@ -31,13 +27,20 @@ def convert(prefix: str, suffix: str, name: str) -> str:
 
 
 def main():
-    prefix = get_url_prefix()
-    suffix = get_url_suffix()
+    try:
+        basedir = Path(argv[1])
+    except IndexError:
+        basedir = Path(DEFAULT_BASEDIR)
+    games_path = basedir / PATH_GAMES
+    files_path = basedir / PATH_FILES
 
-    with open(PATH_IN_FILE) as in_file, open(PATH_OUT_FILE, "w") as out_file:
+    prefix = get_url_prefix(basedir)
+    suffix = get_url_suffix(basedir)
+
+    with open(games_path) as in_file, open(files_path, "w") as out_file:
         out_file.writelines(
-            convert(prefix, suffix, line.removesuffix("\n")) + "\n"
-            for line in in_file.readlines()
+            convert(prefix, suffix, li.removesuffix("\n")) + "\n"
+            for li in in_file.readlines()
         )
 
 

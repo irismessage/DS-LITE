@@ -4,31 +4,38 @@ import json
 from pathlib import Path
 from sys import argv
 
-try:
-    BASEDIR = Path(argv[1])
-except IndexError:
-    BASEDIR = Path("nds/")
-COMPLETIONS_DIR = BASEDIR / "completions/"
-PATH_METADATA = BASEDIR / "metadata.json"
+from _common import DEFAULT_BASEDIR
+
+DIR_COMPLETIONS = "completions/"
+PATH_METADATA = "metadata.json"
 
 
-def list_files() -> list[str]:
-    with open(PATH_METADATA) as fp:
+def list_files(basedir: Path) -> list[str]:
+    metadata_path = basedir / PATH_METADATA
+
+    with open(metadata_path) as fp:
         metadata = json.load(fp)
+
     files = metadata["files"]
     files = [f["name"] for f in files]
     return files
 
 
-def make_completions(files: list[str]):
-    COMPLETIONS_DIR.mkdir(exist_ok=True)
+def make_completions(basedir: Path, files: list[str]):
+    completions_dir = basedir / DIR_COMPLETIONS
+
+    completions_dir.mkdir(exist_ok=True)
     for f in files:
-        COMPLETIONS_DIR.joinpath(f).touch()
+        completions_dir.joinpath(f).touch()
 
 
 def main():
-    files = list_files()
-    make_completions(files)
+    try:
+        basedir = Path(argv[1])
+    except IndexError:
+        basedir = Path(DEFAULT_BASEDIR)
+    files = list_files(basedir)
+    make_completions(basedir, files)
 
 
 if __name__ == "__main__":

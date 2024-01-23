@@ -5,53 +5,53 @@ from argparse import ArgumentParser
 from pathlib import Path
 from sys import argv
 
-from common import PATH_GAMES
+from _common import DEFAULT_BASEDIR, PATH_GAMES
 
 
 def get_parser() -> ArgumentParser:
     parser = ArgumentParser()
-    parser.add_argument("-b", "--basedir", default="nds", type=Path)
+    parser.add_argument("-b", "--basedir", default=DEFAULT_BASEDIR, type=Path)
     parser.add_argument("target", type=Path)
 
     return parser
 
 
-parser = get_parser()
-args = parser.parse_args()
-BASEDIR = args.basedir
-WORKDIR = Path(__file__).parent
-PATH_IN_FILE = WORKDIR / BASEDIR / PATH_GAMES
-
-
-def load() -> set[str]:
-    with open(PATH_IN_FILE) as in_file:
-        games = set(in_file.readlines())
+def load(games_path: Path) -> set[str]:
+    with open(games_path) as file:
+        games = set(file.readlines())
     return games
 
 
-def save(old: set[str], new: set[str]):
+def save(games_path: Path, old: set[str], new: set[str]):
     added = new - old
-    with open(PATH_IN_FILE, "a") as in_file:
-        in_file.writelines(added)
+    with open(games_path, "a") as file:
+        file.writelines(added)
 
 
-def add(target: str):
+def add(games_path: Path, target: str):
     target = target + "\n"
     games = load()
     if target in games:
         print("Already in there")
         return
 
-    with open(PATH_IN_FILE, "a") as in_file:
-        in_file.write(target)
+    with open(games_path, "a") as file:
+        file.write(target)
 
 
-def call_convert():
-    os.system(f"./convert.py '{BASEDIR}'")
+def call_convert(basedir: Path):
+    os.system(f"./convert.py '{basedir}'")
 
 
 def main():
+    parser = get_parser()
+    args = parser.parse_args()
+
+    basedir = args.basedir
+    workdir = Path(__file__).parent
+    games_path = workdir / basedir / PATH_GAMES
     target = args.target.stem
+
     add(target)
     call_convert()
 
