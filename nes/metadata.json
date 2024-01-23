@@ -44633,10 +44633,10 @@
             "reviewer_itemname": "@schwabbendebibap"
         }
     ],
-    "server": "ia804703.us.archive.org",
+    "server": "ia904703.us.archive.org",
     "uniq": 832375304,
     "workable_servers": [
-        "ia804703.us.archive.org",
-        "ia904703.us.archive.org"
+        "ia904703.us.archive.org",
+        "ia804703.us.archive.org"
     ]
 }

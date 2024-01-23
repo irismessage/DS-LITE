@@ -20,7 +20,8 @@ def main():
     source_path = newdir / PATH_SOURCE
     source_dict = {"archiveid": archiveid, "suffix": suffix}
     with open(source_path, "w") as file:
-        json.dump(source_dict, file)
+        json.dump(source_dict, file, indent=4)
+        file.write("\n")
 
     system(f"./get_metadata.sh {newdir}")
     make_completions(newdir)
