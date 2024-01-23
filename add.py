@@ -29,15 +29,17 @@ def save(games_path: Path, old: set[str], new: set[str]):
         file.writelines(added)
 
 
-def add(games_path: Path, target: str):
+def add(games_path: Path, target: str) -> bool:
     target = target + "\n"
     games = load(games_path)
     if target in games:
         print("Already in there")
-        return
+        return False
 
     with open(games_path, "a") as file:
         file.write(target)
+
+    return True
 
 
 def call_convert(basedir: Path):
@@ -53,8 +55,8 @@ def main():
     games_path = workdir / basedir / PATH_GAMES
     target = args.target.stem
 
-    add(games_path, target)
-    convert(basedir)
+    if add(games_path, target):
+        convert(basedir)
 
 
 if __name__ == "__main__":
