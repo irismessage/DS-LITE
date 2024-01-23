@@ -7,5 +7,5 @@ source="https://archive.org/metadata/${archiveid}"
 
 wget \
     --output-document - \
-    "${source}" | 
+    "${source}" |
         python -m json.tool - "${basedir}/metadata.json"
