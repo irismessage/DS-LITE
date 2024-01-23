@@ -21,7 +21,9 @@ def list_files(basedir: Path) -> list[str]:
     return files
 
 
-def make_completions(basedir: Path, files: list[str]):
+def make_completions(basedir: Path):
+    files = list_files(basedir)
+
     completions_dir = basedir / DIR_COMPLETIONS
 
     completions_dir.mkdir(exist_ok=True)
@@ -34,7 +36,7 @@ def main():
         basedir = Path(argv[1])
     except IndexError:
         basedir = Path(DEFAULT_BASEDIR)
-    files = list_files(basedir)
+
     make_completions(basedir, files)
 
 

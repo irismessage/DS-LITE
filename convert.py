@@ -5,9 +5,7 @@ from pathlib import Path
 from sys import argv
 from urllib.parse import quote
 
-from _common import DEFAULT_BASEDIR, PATH_FILES, PATH_GAMES
-
-PATH_SOURCE = "source.json"
+from _common import DEFAULT_BASEDIR, PATH_FILES, PATH_GAMES, PATH_SOURCE
 
 
 def get_template(basedir: Path) -> str:
@@ -36,10 +34,7 @@ def convert(basedir: Path):
     template = get_template(basedir)
 
     with open(games_path) as in_file, open(files_path, "w") as out_file:
-        out_file.writelines(
-            convert_one(template, li)
-            for li in in_file.readlines()
-        )
+        out_file.writelines(convert_one(template, li) for li in in_file.readlines())
 
 
 def main():
@@ -47,7 +42,7 @@ def main():
         basedir = Path(argv[1])
     except IndexError:
         basedir = Path(DEFAULT_BASEDIR)
-    
+
     convert(basedir)
 
 
