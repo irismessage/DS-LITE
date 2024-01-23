@@ -12,7 +12,7 @@ from convert import convert
 def get_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("-b", "--basedir", default=DEFAULT_BASEDIR, type=Path)
-    parser.add_argument("target", type=Path)
+    parser.add_argument("target", nargs="+", type=Path)
 
     return parser
 
@@ -23,29 +23,29 @@ def load(games_path: Path) -> set[str]:
     return games
 
 
-def save(games_path: Path, old: set[str], new: set[str]):
-    added = new - old
+def save(games_path: Path, to_add: set[str]):
     with open(games_path, "a") as file:
-        file.writelines(added)
+        file.writelines(to_add)
 
 
-def add(games_path: Path, target: str) -> bool:
-    target = target + "\n"
+def add(games_path: Path, targets: list[str]) -> bool:
+    targets = set(t.stem + "\n" for t in targets)
 
     games_path.touch()
     games = load(games_path)
-    if target in games:
-        print("Already in there")
+
+    already_added = games.intersection(targets)
+    to_add = targets - games
+
+    if already_added:
+        print("".join(f"Already in there: {g}" for g in already_added), end="")
+
+    if to_add:
+        print("".join(f"Adding: {g}" for g in to_add), end="")
+        save(games_path, to_add)
+        return True
+    else:
         return False
-
-    with open(games_path, "a") as file:
-        file.write(target)
-
-    return True
-
-
-def call_convert(basedir: Path):
-    os.system(f"./convert.py '{basedir}'")
 
 
 def main():
@@ -55,9 +55,9 @@ def main():
     basedir = args.basedir
     workdir = Path(__file__).parent
     games_path = workdir / basedir / PATH_GAMES
-    target = args.target.stem
+    targets = args.target
 
-    if add(games_path, target):
+    if add(games_path, targets):
         convert(basedir)
 
 
