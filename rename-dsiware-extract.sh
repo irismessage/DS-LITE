@@ -12,5 +12,5 @@ out="${stem}.nds"
 bsdtar \
     --keep-old-files \
     --directory "${dest}" \
-    -s "/[0-9]+/${out}/" \
+    -s "/[0-9]\+/${out}/" \
     -xf "${file}"
