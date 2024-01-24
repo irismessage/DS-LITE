@@ -9,4 +9,4 @@ procs="${3:-1}"
 mkdir -p "${dest}"
 find "${source}" -type f -print0 |
     xargs --verbose --max-procs="${procs}" --max-args=1 --null \
-        bsdtar --keep-old-files --directory "${dest}" -xf
+        ./rename-dsiware-extract.sh "${dest}"
