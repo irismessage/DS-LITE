@@ -1,2 +1,3 @@
 put roms on my sd in nice folders instead of all in one per system. also remove folders I dont use
 also simplify copying to sd, rsync script
+script to backup saves from sd (does ludusavi do that?)
