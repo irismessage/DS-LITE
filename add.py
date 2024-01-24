@@ -9,6 +9,11 @@ from _common import DEFAULT_BASEDIR, PATH_GAMES
 from convert import convert
 
 
+# todo could simplify whole basedir thing
+#   by just getting it from the filename to add
+#   and doing all at once in the other scripts
+
+
 def get_parser() -> ArgumentParser:
     parser = ArgumentParser()
     parser.add_argument("-b", "--basedir", default=DEFAULT_BASEDIR, type=Path)
