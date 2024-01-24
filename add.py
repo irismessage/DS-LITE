@@ -12,6 +12,9 @@ from convert import convert
 # todo could simplify whole basedir thing
 #   by just getting it from the filename to add
 #   and doing all at once in the other scripts
+# also getting suffix from metadata
+# how has this simple download script become so complicated
+# oh also remember to strip leading / from basedir in sh scripts
 
 
 def get_parser() -> ArgumentParser:
