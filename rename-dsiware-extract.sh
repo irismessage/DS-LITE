@@ -3,7 +3,7 @@ set -eux
 
 dest="${1}"
 file="${2}"
-stem="$(basename "${file}" '.7z')"
+stem="$(basename "${file%.*}")"
 out="${stem}.nds"
 
 # if dsiware rip contents is just like 00000002,
