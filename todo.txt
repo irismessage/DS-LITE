@@ -1,1 +1,2 @@
-put roms on my sim in nice folders instead of all in one per system. also remove folders I dont use
+put roms on my sd in nice folders instead of all in one per system. also remove folders I dont use
+also simplify copying to sd, rsync script
