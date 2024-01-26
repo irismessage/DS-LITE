@@ -37,7 +37,7 @@ def main():
     except IndexError:
         basedir = Path(DEFAULT_BASEDIR)
 
-    make_completions(basedir, files)
+    make_completions(basedir)
 
 
 if __name__ == "__main__":
