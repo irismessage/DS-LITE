@@ -9,3 +9,6 @@ zips/
 # misc. directories
 firmware/
 manuals/
+
+# save file backup
+!saves/*
