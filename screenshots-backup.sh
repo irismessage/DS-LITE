@@ -18,7 +18,7 @@ backups='screenshots'
 
 screenshots_tar="${sd}/${bootstrap}"
 tar_creation_date=$(stat --format='%w' "${screenshots_tar}")
-tar_date_formatted=$(date --date="${tar_creation_date}" '+%Y-%m-%dT%H:%M:%S')
+tar_date_formatted=$(date --date="${tar_creation_date}" '+%Y%m%dT%H%M%SZ')
 
 extract_dest="${backups}/${tar_date_formatted}"
 mkdir -p "${extract_dest}"
