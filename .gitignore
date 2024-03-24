@@ -6,9 +6,12 @@ completions/
 roms/
 zips/
 
+# unconverted screenshots
+screenshots.tar
+
 # misc. directories
-firmware/
-manuals/
+/firmware/
+/manuals/
 
 # save file backup
 !saves/*

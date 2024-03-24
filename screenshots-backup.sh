@@ -8,31 +8,36 @@ set -eux
 # https://github.com/DS-Homebrew/nds-bootstrap/blob/v1.4.0/retail/cardengine/arm9/source/cardengine.c#L338
 MD5_EMPTY_BMP='ada747d43e8d4f442f59b255fcf969ea'
 # full of images like screenshotXX.bmp
-bootstrap='_nds/nds-bootstrap/screenshots.tar'
+sd='/run/media/joelm/SANDISK'
+tar_name='screenshots.tar'
+screenshots_tar="${sd}/_nds/nds-bootstrap/${tar_name}"
 # these images will be randomly displayed
 # on the top screen.
 # overrides displaying screenshots
-wallpapers='_nds/TWiLightMenu/dsimenu/photos'
-sd='/run/media/joelm/SANDISK'
+wallpapers="${sd}/_nds/TWiLightMenu/dsimenu/photos"
 backups='screenshots'
 
-screenshots_tar="${sd}/${bootstrap}"
+# get creation date of tar
 tar_creation_date=$(stat --format='%w' "${screenshots_tar}")
 tar_date_formatted=$(date --date="${tar_creation_date}" '+%Y%m%dT%H%M%SZ')
 
-extract_dest="${backups}/${tar_date_formatted}"
-mkdir -p "${extract_dest}"
-bsdtar --extract --file "${screenshots_tar}" --directory "${extract_dest}"
+# move tar off sd
+screenshots_tar_moved="${backups}/${tar_name}}"
+mkdir -p "${backups}"
+mv "${screenshots_tar}" "${screenshots_tar_moved}"
 
-for screenshot_bmp in "${extract_dest}"/*.bmp
+for num in $(seq --equal-width 1 50)
 do
-    screenshot_png="${screenshot_bmp%%.bmp}.png"
-    return_code=0
-    convert "${screenshot_bmp}" "${screenshot_png}" || return_code="${?}"
     # convert to png, break if reached empty screenshot
+    screenshot_bmp="screenshot${num}.bmp"
+    screenshot_png="${backups}/screenshot-${tar_date_formatted}-${num}.png"
+    return_code=0
+    bsdtar --to-stdout --extract --file "${screenshots_tar_moved}" "${screenshot_bmp}" | 
+        convert 'bmp:-' "${screenshot_png}" ||
+            return_code="${?}"
     if [[ "${return_code}" -ne 0 ]]
     then
         break
     fi
+    cp --target-directory="${wallpapers}" "${screenshot_png}"
 done
-rm "${extract_dest}"/*.bmp
