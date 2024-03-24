@@ -1,6 +1,9 @@
 #!/bin/bash
 set -eux
 
+# todo put variables like this in common.sh and source it?
+# don't like the ambiguous imports with that method very much
+
 # the empty images have these as hash
 # they're just all 0 bytes for the same size as a real screenshot
 # nds-bootstrap doesn't store a pointer to this, it just checks magic bytes
