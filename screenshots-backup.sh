@@ -22,22 +22,25 @@ tar_creation_date=$(stat --format='%w' "${screenshots_tar}")
 tar_date_formatted=$(date --date="${tar_creation_date}" '+%Y%m%dT%H%M%SZ')
 
 # move tar off sd
-screenshots_tar_moved="${backups}/${tar_name}}"
+screenshots_tar_moved="${backups}/${tar_name}"
 mkdir -p "${backups}"
 mv "${screenshots_tar}" "${screenshots_tar_moved}"
 
 for num in $(seq --equal-width 1 50)
 do
-    # convert to png, break if reached empty screenshot
+    # convert to png
     screenshot_bmp="screenshot${num}.bmp"
-    screenshot_png="${backups}/screenshot-${tar_date_formatted}-${num}.png"
+    screenshot_png="screenshot-${tar_date_formatted}-${num}.png"
+    screenshot_dest="${backups}/${screenshot_png}"
     return_code=0
     bsdtar --to-stdout --extract --file "${screenshots_tar_moved}" "${screenshot_bmp}" | 
-        convert 'bmp:-' "${screenshot_png}" ||
+        convert 'bmp:-' "${screenshot_dest}" ||
             return_code="${?}"
+    # break if reached empty screenshot
     if [[ "${return_code}" -ne 0 ]]
     then
         break
     fi
-    cp --target-directory="${wallpapers}" "${screenshot_png}"
+    # otherwise, copy to wallpapers
+    ./image-resize.sh "${screenshot_dest}" "${wallpapers}/${screenshot_png}"
 done
