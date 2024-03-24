@@ -27,11 +27,12 @@ bsdtar --extract --file "${screenshots_tar}" --directory "${extract_dest}"
 for screenshot_bmp in "${extract_dest}"/*.bmp
 do
     screenshot_png="${screenshot_bmp%%.bmp}.png"
+    return_code=0
+    convert "${screenshot_bmp}" "${screenshot_png}" || return_code="${?}"
     # convert to png, break if reached empty screenshot
-    # if [ ! $(convert "${screenshot_bmp}" "${screenshot_png}") ]
-    # then
-    #     break
-    # fi
-    convert "${screenshot_bmp}" "${screenshot_png}" || true
+    if [[ "${return_code}" -ne 0 ]]
+    then
+        break
+    fi
 done
 rm "${extract_dest}"/*.bmp
