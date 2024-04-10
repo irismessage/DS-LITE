@@ -1,9 +1,38 @@
 #!/bin/bash
 set -eux
 
-zip='firmware/TWiLightMenu-DSi.7z'
+firmware_dir='firmware'
+zip="${firmware_dir}/TWiLightMenu-DSi.7z"
+twlm_old="${firmware_dir}/twlm/old"
+twlm_new="${firmware_dir}/twlm/new"
+
 disklabel='SANDISK'
 mountpoint="/run/media/${USER}/${disklabel}"
 
 # https://wiki.ds-homebrew.com/twilightmenu/updating-dsi.html
-bsdtar --extract --file "${zip}" --directory "${mountpoint}" '_nds' 'BOOT.NDS'
+
+# dumb overwrite
+# bsdtar \
+#     --extract --file "${zip}" \
+#     --directory "${mountpoint}" \
+#     '_nds' 'BOOT.NDS'
+
+# incremental update
+# extract firmware zip to new
+mkdir -p "${twlm_new}"
+bsdtar \
+    --extract --file "${zip}" \
+    --directory "${twlm_new}" \
+    '_nds' 'BOOT.NDS'
+
+# copy firmware from new to old based on checksums
+# this is fast since it happens on the pc
+# and it creates a directory with accurate modification times
+# based on which files are changed in the update
+rsync -avP --checksum "${twlm_new}" "${twlm_old}"
+
+# copy firmware from old to sd card
+# this is fast since all it reads from the sd card
+# is size and update time metadata
+# and it only sends modified files since the last update
+rsync -avP "${twlm_old}" "${mountpoint}"
