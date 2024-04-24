@@ -13,7 +13,7 @@ mountpoint="/run/media/${USER}/${disklabel}"
 # https://wiki.ds-homebrew.com/twilightmenu/updating-dsi.html
 # title/ is just for hiyaCFW
 # AP-patched games.txt seems to be just for perusal
-# snemul.cfg may need to exist for NES games to run
+# snemul.cfg may need to exist for SNES games to run
 #   it's not included in the install guide so that could be an oversight (todo report)
 #   however we don't want to replace it on update and overwrite settings
 # version.txt is just the version number
