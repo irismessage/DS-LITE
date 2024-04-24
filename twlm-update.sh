@@ -30,7 +30,7 @@ mkdir -p "${twlm_new}"
 bsdtar \
     --extract --file "${zip}" \
     --directory "${twlm_new}" \
-    '_nds' 'BOOT.NDS'
+    '_nds' 'BOOT.NDS' 'version.txt'
 
 
 # trailing slashes in src path are needed for correct behaivour
