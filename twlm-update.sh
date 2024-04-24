@@ -40,6 +40,8 @@ bsdtar \
 # this is fast since it happens on the pc
 # and it creates a directory with accurate modification times
 # based on which files are changed in the update
+# todo fix: -a (archive) preserves modification time
+#   when that's the opposite of what I want to do
 rsync -avP --checksum "${twlm_new}/" "${twlm_working}"
 
 # copy firmware from working to sd card
