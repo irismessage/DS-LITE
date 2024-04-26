@@ -9,12 +9,17 @@ directory='firmware'
 
 if [ -z "$version" ]
 then
+    # latest version
     url="${repo}/releases/latest/download/${file}"
 else
+    # specific version
+    # delete old one so wget won't refuse to do it
+    # if it's older
+    trash-put -f "${directory}/${file}"
     url="${repo}/releases/download/${version}/${file}"
 fi
 
-trash-put -f "${directory}/${file}"
 wget \
+    --timestamping \
     --directory-prefix "${directory}" \
     "${url}"
