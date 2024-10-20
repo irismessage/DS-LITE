@@ -16,7 +16,7 @@ ndsbargs='-colorspace sRGB -depth 8'
 # rather than placing custom images in screenshots.tar
 # is to extract and convert screenshots.tar into theme images
 
-convert \
+magick convert \
     "${input}" \
     -resize "${size}^" \
     -gravity 'Center' \
