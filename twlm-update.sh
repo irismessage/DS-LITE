@@ -23,6 +23,7 @@ mountpoint="/run/media/${USER}/${disklabel}"
 #     --extract --file "${zip}" \
 #     --directory "${mountpoint}" \
 #     '_nds' 'BOOT.NDS'
+# exit
 
 # incremental update
 # extract firmware zip to new
