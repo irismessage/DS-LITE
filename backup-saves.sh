@@ -10,5 +10,5 @@ rsync \
     --include '*.sav' \
     --include '*/' \
     --exclude '*' \
-    '/run/media/joelm/SANDISK/' \
+    "/run/media/${USER}/SANDISK/" \
     'saves/'

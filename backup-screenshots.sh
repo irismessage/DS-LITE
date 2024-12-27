@@ -11,7 +11,7 @@ set -eux
 # https://github.com/DS-Homebrew/nds-bootstrap/blob/v1.4.0/retail/cardengine/arm9/source/cardengine.c#L338
 MD5_EMPTY_BMP='ada747d43e8d4f442f59b255fcf969ea'
 # full of images like screenshotXX.bmp
-sd='/run/media/joelm/SANDISK'
+sd="/run/media/${USER}/SANDISK"
 tar_name='screenshots.tar'
 screenshots_tar="${sd}/_nds/nds-bootstrap/${tar_name}"
 # these images will be randomly displayed
