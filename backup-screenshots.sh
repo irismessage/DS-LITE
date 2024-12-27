@@ -37,7 +37,7 @@ do
     screenshot_dest="${backups}/${screenshot_png}"
     return_code=0
     bsdtar --to-stdout --extract --file "${screenshots_tar_moved}" "${screenshot_bmp}" | 
-        magick convert 'bmp:-' "${screenshot_dest}" ||
+        magick 'bmp:-' "${screenshot_dest}" ||
             return_code="${?}"
     # break if reached empty screenshot
     if [[ "${return_code}" -ne 0 ]]
