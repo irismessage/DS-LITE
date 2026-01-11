@@ -7,18 +7,15 @@ repo='https://github.com/DS-Homebrew/TWiLightMenu'
 file='TWiLightMenu-DSi.7z'
 directory='firmware'
 
-if [ -z "$version" ]
-then
+if [ -z "$version" ]; then
     # latest version
-    url="${repo}/releases/latest/download/${file}"
+    base_url="${repo}/releases/latest/download"
 else
     # specific version
-    # delete old one so wget won't refuse to do it
-    # if it's older
-    trash-put -f "${directory}/${file}"
-    url="${repo}/releases/download/${version}/${file}"
+    base_url="${repo}/releases/download/${version}"
 fi
 
+url="${base_url}/${file}"
 wget \
     --timestamping \
     --directory-prefix "${directory}" \
