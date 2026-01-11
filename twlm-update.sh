@@ -4,8 +4,14 @@ set -eux
 disklabel='SANDISK'
 mountpoint="/run/media/${USER}/${disklabel}"
 
-firmware_dir='firmware'
+firmware_dir='firmware/twlm-download'
 zip="${firmware_dir}/TWiLightMenu-DSi.7z"
+addons=(
+    'AddOn-BetterDSiMenuMusic.7z'
+    'AddOn-ExtraUIMusic.7z'
+    'AddOn-Multimedia.7z'
+    'AddOn-VirtualConsole.7z'
+)
 
 twlm_working="${firmware_dir}/twlm/working"
 twlm_new="${firmware_dir}/twlm/new"
@@ -23,11 +29,23 @@ DUMB=1
 if [ "${DUMB}" -eq 1 ]; then
     # dumb overwrite
     bsdtar \
+        --verbose \
         --extract --file "${zip}" \
         --directory "${mountpoint}" \
-        '_nds' 'BOOT.NDS'
-    exit
+        '_nds' 'BOOT.NDS' 'version.txt'
+
+    for addon_file in "${addons[@]}"; do
+        addon_zip="${firmware_dir}/${addon_file}"
+        bsdtar \
+        --verbose \
+        --extract --file "${addon_zip}" \
+        --directory "${mountpoint}" \
+        '_nds'
+    done
+
 else
+    # haven't made it do addons, and it's a bit shit
+
     # incremental update
     # extract firmware zip to new
     mkdir -p "${twlm_new}"
