@@ -4,8 +4,14 @@ set -eux
 version="${1:-}"
 
 repo='https://github.com/DS-Homebrew/TWiLightMenu'
-file='TWiLightMenu-DSi.7z'
-directory='firmware'
+directory='firmware/twlm-download'
+files=(
+    'TWiLightMenu-DSi.7z'
+    'AddOn-BetterDSiMenuMusic.7z'
+    'AddOn-ExtraUIMusic.7z'
+    'AddOn-Multimedia.7z'
+    'AddOn-VirtualConsole.7z'
+)
 
 if [ -z "$version" ]; then
     # latest version
@@ -15,8 +21,8 @@ else
     base_url="${repo}/releases/download/${version}"
 fi
 
-url="${base_url}/${file}"
+urls=( "${files[@]/#/"${base_url}/"}" )
 wget \
     --timestamping \
     --directory-prefix "${directory}" \
-    "${url}"
+    "${urls[@]}"
